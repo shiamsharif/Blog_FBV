@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'dist/style.css' %}">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+    <div class="min-h-screen flex flex-col lg:flex-row">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-full lg:w-1/4 bg-white shadow-lg px-6 py-8 border-b lg:border-b-0 lg:border-r border-gray-200">
+            <div class="sticky top-0">
+                <h2 class="text-3xl font-extrabold text-blue-600 mb-2">My Blog</h2>
+                <p class="text-gray-600 text-sm">Sharing stories, thoughts, and ideas.</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="content" class="flex-1 px-6 py-8">
+            <div class="max-w-4xl mx-auto">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+
+    </div>
+</body>
+
+</html>

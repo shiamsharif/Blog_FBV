@@ -1,0 +1,26 @@
+
+
+{% block content %}
+<!-- Pagination -->
+<div class="flex justify-center items-center mt-10 space-x-4 text-sm">
+    {% if page.has_previous %}
+        <a href="?page={{ page.previous_page_number }}"
+           class="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200">
+            ← Previous
+        </a>
+    {% endif %}
+
+    <span class="text-gray-600">
+        Page <span class="font-semibold text-gray-800">{{ page.number }}</span> of
+        <span class="font-semibold text-gray-800">{{ page.paginator.num_pages }}</span>
+    </span>
+
+    {% if page.has_next %}
+        <a href="?page={{ page.next_page_number }}"
+           class="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow hover:bg-gray-100 transition duration-200">
+            Next →
+        </a>
+    {% endif %}
+</div>
+
+{% endblock content %}

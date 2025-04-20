@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<article class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200 max-w-4xl mx-auto my-10">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ post.title }}</h1>
+
+    <p class="text-sm text-gray-500 mb-6">
+        Published on <span class="font-medium text-gray-700">{{ post.publish|date:"F j, Y" }}</span> by 
+        <span class="text-blue-600 font-semibold">{{ post.author }}</span>
+    </p>
+
+    <div class="prose prose-lg max-w-none text-gray-800 mb-10  break-words">
+        {{ post.body|safe }}
+    </div>
+
+    {% comment %} <!-- Back to Home Button -->
+    <div class="mb-10">
+        <a href="{% url 'post_list' %}" 
+        class="inline-flex items-center gap-2 text-blue-600 hover:text-white hover:bg-blue-600 border border-blue-600 px-5 py-2.5 rounded-xl text-sm font-medium shadow-sm transition-all duration-300 ease-in-out group">
+            <svg class="w-4 h-4 text-blue-600 group-hover:text-white transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Back to Home</span>
+        </a>
+    </div> {% endcomment %}
+
+
+    <div class="mt-12 space-y-8">
+        <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-6">Comments</h2>
+    
+        {% for comment in comments %}
+            <div class="flex gap-4 items-start bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm">
+                <!-- Avatar or Icon -->
+                <div class="flex-shrink-0">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">
+                        {{ comment.name|slice:":1" }}
+                    </div>
+                </div>
+    
+                <!-- Comment content -->
+                <div class="flex-1">
+                    <div class="flex justify-between items-center mb-1">
+                        <h4 class="text-md font-semibold text-gray-800">{{ comment.name }}</h4>
+                        <span class="text-xs text-gray-400">{{ comment.created|timesince }}</span>
+                    </div>
+                    <p class="text-gray-700 whitespace-pre-line leading-relaxed">
+                        {{ comment.body }}
+                    </p>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-gray-500 italic">There are no comments yet. Be the first to leave one!</p>
+        {% endfor %}
+    </div>
+    
+
+    <div class="mt-12">
+        {% include "comment_form.html" %}
+    </div>
+</article>
+{% endblock %}
