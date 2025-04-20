@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Add a comment{% endblock %}
+{% block title %}Add a Comment{% endblock %}
 
 {% block content %}
+<div class="max-w-3xl mx-auto mt-12 p-6 bg-white border border-gray-200 rounded-2xl shadow-lg">
+
     {% if comment %}
-        <h2>Your comment has been added.</h2>
-        <p><a href="{{ post.get_absolute_url }}">Back to the post</a></p>
+        <div class="text-center space-y-4">
+            <h2 class="text-2xl font-bold text-green-600">✅ Your comment has been added!</h2>
+            <p class="text-gray-700">Thank you for your feedback. 🎉</p>
+            <a href="{{ post.get_absolute_url }}"
+               class="inline-block mt-4 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-md transition duration-300">
+                🔙 Back to the Post
+            </a>
+        </div>
     {% else %}
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">📝 Leave a Comment</h2>
         {% include "./comment_form.html" %}
     {% endif %}
+
+</div>
 {% endblock %}

@@ -2,31 +2,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'dist/style.css' %}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'dist/style.css' %}" />
+  <script defer>
+    // Toggle mobile menu
+    function toggleMenu() {
+      const nav = document.getElementById('mobile-menu');
+      nav.classList.toggle('hidden');
+    }
+  </script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
-    <div class="min-h-screen flex flex-col lg:flex-row">
 
-        <!-- Sidebar -->
-        <aside id="sidebar" class="w-full lg:w-1/4 bg-white shadow-lg px-6 py-8 border-b lg:border-b-0 lg:border-r border-gray-200">
-            <div class="sticky top-0">
-                <h2 class="text-3xl font-extrabold text-blue-600 mb-2">My Blog</h2>
-                <p class="text-gray-600 text-sm">Sharing stories, thoughts, and ideas.</p>
-            </div>
-        </aside>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed flex flex-col min-h-screen">
 
-        <!-- Main Content -->
-        <main id="content" class="flex-1 px-6 py-8">
-            <div class="max-w-4xl mx-auto">
-                {% block content %}
-                {% endblock %}
-            </div>
-        </main>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white shadow-md border-b border-gray-200">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="{% url 'blog:post_list' %}" class="text-2xl font-extrabold text-blue-600 hover:text-blue-700 transition-colors">📘 My Blog</a>
 
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex space-x-6">
+        <a href="{% url 'blog:post_list' %}" class="text-gray-700 hover:text-blue-600 transition">Home</a>
+        <a href="#" class="text-gray-700 hover:text-blue-600 transition">About</a>
+        <a href="#" class="text-gray-700 hover:text-blue-600 transition">Contact</a>
+      </nav>
+
+      <!-- Mobile Button -->
+      <button onclick="toggleMenu()" class="lg:hidden text-gray-700 hover:text-blue-600 focus:outline-none">
+        ☰
+      </button>
     </div>
-</body>
 
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden hidden px-4 pb-4">
+      <a href="{% url 'blog:post_list' %}" class="block py-2 text-gray-700 hover:text-blue-600 transition">Home</a>
+      <a href="#" class="block py-2 text-gray-700 hover:text-blue-600 transition">About</a>
+      <a href="#" class="block py-2 text-gray-700 hover:text-blue-600 transition">Contact</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="content" class="flex-grow px-4 py-10">
+    <div class="max-w-4xl mx-auto">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class=" bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 text-white mt-12">
+    <div class="max-w-6xl mx-auto px-4 py-8 grid gap-8 md:grid-cols-3">
+      <div>
+        <h3 class="text-xl font-semibold mb-2">📘 My Blog</h3>
+        <p class="text-sm">Stories, thoughts, and ideas shared by passionate people around the web.</p>
+      </div>
+
+      <div>
+        <h4 class="text-lg font-semibold mb-2">Quick Links</h4>
+        <ul class="space-y-1 text-sm">
+          <li><a href="{% url 'blog:post_list' %}" class="hover:underline">Home</a></li>
+          <li><a href="#" class="hover:underline">About</a></li>
+          <li><a href="#" class="hover:underline">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-lg font-semibold mb-2">Get in Touch</h4>
+        <p class="text-sm">Email: <a href="mailto:shiam.sharif.07@gmail.com" class="underline">shiam.sharif.07@gmail.com</a></p>
+        <p class="text-sm">Phone: +123 456 7890</p>
+      </div>
+    </div>
+
+    <div class="bg-purple-700 text-center py-4 text-sm">
+      &copy; {{ now|date:"Y" }} My Blog. All rights reserved.
+    </div>
+  </footer>
+
+</body>
 </html>

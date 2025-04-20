@@ -3,49 +3,53 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<article class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200 max-w-4xl mx-auto my-10">
-    <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ post.title }}</h1>
+<article class="bg-gradient-to-b from-white via-blue-50 to-green-50 p-8 rounded-2xl shadow-2xl border border-gray-200 max-w-4xl mx-auto my-12 transition-all duration-300">
 
-    <p class="text-sm text-gray-500 mb-6">
-        Published on <span class="font-medium text-gray-700">{{ post.publish|date:"F j, Y" }}</span> by 
+    <h1 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 mb-4">
+        {{ post.title }}
+    </h1>
+
+    <p class="text-sm text-gray-600 mb-8">
+        📅 Published on 
+        <span class="font-medium text-gray-800">{{ post.publish|date:"F j, Y" }}</span> by 
         <span class="text-blue-600 font-semibold">{{ post.author }}</span>
     </p>
 
-    <div class="prose prose-lg max-w-none text-gray-800 mb-10  break-words">
+    <div class="prose prose-lg max-w-none text-gray-800 mb-12 break-words">
         {{ post.body|safe }}
     </div>
 
-    {% comment %} <!-- Back to Home Button -->
+    <!-- Back to Home Button -->
     <div class="mb-10">
-        <a href="{% url 'post_list' %}" 
-        class="inline-flex items-center gap-2 text-blue-600 hover:text-white hover:bg-blue-600 border border-blue-600 px-5 py-2.5 rounded-xl text-sm font-medium shadow-sm transition-all duration-300 ease-in-out group">
+        <a href="{% url 'blog:post_list' %}" 
+           class="inline-flex items-center gap-2 bg-white border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-md transition-all duration-300 group">
             <svg class="w-4 h-4 text-blue-600 group-hover:text-white transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
             <span>Back to Home</span>
         </a>
-    </div> {% endcomment %}
+    </div>
 
+    <!-- Comments Section -->
+    <div class="mt-14 space-y-8">
+        <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-6">💬 Comments</h2>
 
-    <div class="mt-12 space-y-8">
-        <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-6">Comments</h2>
-    
         {% for comment in comments %}
-            <div class="flex gap-4 items-start bg-gray-50 border border-gray-200 rounded-xl p-5 shadow-sm">
-                <!-- Avatar or Icon -->
+            <div class="flex gap-4 items-start bg-white border border-gray-200 hover:border-blue-400 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+                <!-- Avatar -->
                 <div class="flex-shrink-0">
-                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm uppercase">
                         {{ comment.name|slice:":1" }}
                     </div>
                 </div>
-    
-                <!-- Comment content -->
+
+                <!-- Comment Content -->
                 <div class="flex-1">
                     <div class="flex justify-between items-center mb-1">
                         <h4 class="text-md font-semibold text-gray-800">{{ comment.name }}</h4>
-                        <span class="text-xs text-gray-400">{{ comment.created|timesince }}</span>
+                        <span class="text-xs text-gray-400 italic">{{ comment.created|timesince }} ago</span>
                     </div>
-                    <p class="text-gray-700 whitespace-pre-line leading-relaxed">
+                    <p class="text-gray-700 leading-relaxed whitespace-pre-line">
                         {{ comment.body }}
                     </p>
                 </div>
@@ -54,9 +58,9 @@
             <p class="text-gray-500 italic">There are no comments yet. Be the first to leave one!</p>
         {% endfor %}
     </div>
-    
 
-    <div class="mt-12">
+    <!-- Comment Form -->
+    <div class="mt-16">
         {% include "comment_form.html" %}
     </div>
 </article>
