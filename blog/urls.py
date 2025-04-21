@@ -15,6 +15,9 @@ urlpatterns = [
         views.post_detail,
         name="post_detail"
     ),
+    
+    path("search/", views.Search.as_view(), name='search'),
+    
     # path('<int:post_id>/comment/', views.post_comment, name='post_comment'),
     
 

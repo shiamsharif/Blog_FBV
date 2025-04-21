@@ -4,6 +4,8 @@ from django.views.decorators.http import require_POST
 from .forms import CommentForm
 from .models import Post, Comment
 from taggit.models import Tag
+from django.db.models import Q
+from django.views.generic import ListView
 
 
 def post_list(request, tag_slug=None):
@@ -125,3 +127,22 @@ def post_detail(request, year, month, day, post):
             "new_comment": new_comment
         }
     )
+
+
+class Search(ListView):
+    model = Post
+    template_name = 'search.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        query = self.request.GET.get('query', '').strip()
+        if query:
+            return Post.objects.filter(
+                Q(title__icontains=query) 
+            ).distinct().select_related('author')
+        return Post.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('query', '').strip()
+        return context
